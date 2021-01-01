@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quizodev/Screens/QuizPage.dart';
+import 'package:quizodev/Screens/Difficulty.dart';
 import 'package:quizodev/Screens/QuizPage2.dart';
-
-void gotoQuizPage(BuildContext context) {
-  Navigator.of(context).push(
-    MaterialPageRoute(builder: (context) => QuizPage()),
-  );
-}
 
 void gotoQuizPage2(BuildContext context) {
   Navigator.of(context).push(
@@ -14,7 +8,20 @@ void gotoQuizPage2(BuildContext context) {
   );
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int category;
+
+  void gotoDifficultyPage(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => Difficulty(category: category)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,9 +59,12 @@ class HomePage extends StatelessWidget {
             child: RaisedButton(
               color: Colors.greenAccent,
               onPressed: () {
-                gotoQuizPage(context);
+                setState(() {
+                  category = 18;
+                });
+                gotoDifficultyPage(context);
               },
-              child: Text('Genel Kültür'),
+              child: Text('Computer'),
             ),
           ),
           SizedBox(
@@ -66,14 +76,14 @@ class HomePage extends StatelessWidget {
             child: RaisedButton(
               color: Colors.greenAccent,
               onPressed: () {
-                gotoQuizPage2(context);
+                setState(() {
+                  category = 19;
+                });
+                gotoDifficultyPage(context);
               },
-              child: Text('Başkentler'),
+              child: Text('Mathematics'),
             ),
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.09,
-          )
         ],
       ),
     );

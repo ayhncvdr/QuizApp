@@ -1,41 +1,55 @@
+import 'dart:convert' as converter;
+
+import 'package:http/http.dart' as http;
+
 import 'Option.dart';
 import 'Question.dart';
 
 class QuizManager {
   QuizManager() {
-    _questions.add(Question('Fenerbahçe kaç yılında kurulmuştur?', [
-      Option('1907', 10),
-      Option('1905', 0),
-      Option('1903', 0),
-      Option('1961', 0),
-    ]));
+    //print("before");
+    //LoadQuestions(3);
+    //  print("after");
+  }
+  Future<void> LoadQuestions(
+      int numberOfQuestions, int category, String difficulty) async {
+    var url =
+        'https://opentdb.com/api.php?amount=$numberOfQuestions&category=$category&difficulty=$difficulty&type=multiple';
+    var response = await http.get(url);
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      //print(response.body);
+      Map<String, dynamic> json = converter.jsonDecode(response.body);
+      //print(json['response_code']);
+      //print(json['results'][0]['question']);
+      //print(json['results'][1]['question']);
+      //print(json['results'][2]['question']);
+      //for (var question in json['results']) {
+      //  print(question['question']);
+      //  print(question['correct_answer']);
+      //  print(question['incorrect_answers']);
+      //}
+      for (int i = 0; i < json['results'].length; i++) {
+        var questionJson = json['results'][i];
+        print(questionJson['question']);
+        print(questionJson['correct_answer']);
+        print(questionJson['incorrect_answers']);
+        List<Option> options = [];
+        options.add(Option(questionJson['correct_answer'], 10));
+        for (int j = 0; j < questionJson['incorrect_answers'].length; j++) {
+          options.add(Option(questionJson['incorrect_answers'][j], 0));
+        }
+        Question question = Question(questionJson['question'], options);
+        _questions.add(question);
+      }
 
-    _questions.add(Question("Ay'a ayak basan ilk insan kimdir?", [
-      Option('Neil Armstrong', 10),
-      Option('Michael Collins', 0),
-      Option('Buzz Aldrin', 0),
-      Option('Yuri Gagarin', 0),
-    ]));
-    _questions
-        .add(Question("İstanbul'un içme suyu hangi kaynaktan karşılanıyor?", [
-      Option('Yeraltı Suyu', 0),
-      Option('Marmara Denizi', 0),
-      Option('Yüzey Suyu', 10),
-      Option('Yüzey suyu ve yeraltı suyu', 0),
-    ]));
-
-    _questions
-        .add(Question('Aşağıdakilerden hangisi bir radyasyon birimidir?', [
-      Option('ppm', 0),
-      Option('kcal', 0),
-      Option('kWh', 0),
-      Option('Sievert', 10),
-    ]));
-    _questions.shuffle();
-    for (var question in _questions) {
-      question.options.shuffle();
+      _questions.shuffle();
+      for (var question in _questions) {
+        question.options.shuffle();
+      }
     }
   }
+
   List<Question> _questions = [];
   int _score = 0;
   int currentQuestionId = 0;
