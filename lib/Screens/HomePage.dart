@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           SizedBox(
-            height: 20,
+            height: MediaQuery.of(context).size.height * 0.03,
           ),
           Container(
             width: MediaQuery.of(context).size.width * 0.3,
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           SizedBox(
-            height: 20,
+            height: MediaQuery.of(context).size.height * 0.03,
           ),
           Container(
             width: MediaQuery.of(context).size.width * 0.3,
@@ -77,11 +77,62 @@ class _HomePageState extends State<HomePage> {
               color: Colors.greenAccent,
               onPressed: () {
                 setState(() {
-                  category = 19;
+                  category = 21;
                 });
                 gotoDifficultyPage(context);
               },
-              child: Text('Mathematics'),
+              child: Text('Sports'),
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.03,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.3,
+            height: MediaQuery.of(context).size.height * 0.05,
+            child: RaisedButton(
+              color: Colors.greenAccent,
+              onPressed: () {
+                setState(() {
+                  category = 23;
+                });
+                gotoDifficultyPage(context);
+              },
+              child: Text('History'),
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.03,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.3,
+            height: MediaQuery.of(context).size.height * 0.05,
+            child: RaisedButton(
+              color: Colors.greenAccent,
+              onPressed: () {
+                setState(() {
+                  category = 10;
+                });
+                gotoDifficultyPage(context);
+              },
+              child: Text('Books'),
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.03,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.3,
+            height: MediaQuery.of(context).size.height * 0.05,
+            child: RaisedButton(
+              color: Colors.greenAccent,
+              onPressed: () {
+                setState(() {
+                  category = 12;
+                });
+                gotoDifficultyPage(context);
+              },
+              child: Text('Music'),
             ),
           ),
         ],
